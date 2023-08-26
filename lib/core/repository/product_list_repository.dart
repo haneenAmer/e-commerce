@@ -14,6 +14,7 @@ class ProductListRepository {
       print('hi from repo');
       return products;
     } catch (e) {
+      print('Error: $e'); // Print the error for debugging
       rethrow;
     }
   }
