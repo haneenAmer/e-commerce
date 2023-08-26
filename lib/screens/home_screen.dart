@@ -1,21 +1,51 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hala_sat_task/constance/constance.dart';
 import 'package:hala_sat_task/core/models/product_list_models.dart';
 import 'package:hala_sat_task/riveropd/product_list_riverpod.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import '../widgets/widgets.dart';
 import 'details_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  HomeScreen({Key? key}) : super(key: key);
+  // static const _pageSize = 20;
+
+  // final PagingController<int, Product> pagingController =
+  //     PagingController(firstPageKey: 0);
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+//     final PagingController<int, Product> _pagingController =
+//       PagingController(firstPageKey: 0);
+
   Products? products;
+
   @override
+  //  void initState() {
+  //   super.initState();
+  //   _pagingController.addPageRequestListener((pageKey) {
+  //     _fetchPage(pageKey);
+  //   });
+  // }
+  // Future<void> _fetchPage(int pageKey) async {
+  //   try {
+  //     final nextPage = pageKey + 1;
+  //     final newItems = await  ref.read(productListFutureProvider).products(page: nextPage);
+  //     final isLastPage = newItems.data.isEmpty;
+  //     if (isLastPage) {
+  //       _pagingController.appendLastPage(newItems.data);
+  //     } else {
+  //       _pagingController.appendPage(newItems.data, nextPage);
+  //     }
+  //   } catch (error) {
+  //     _pagingController.error = error;
+  //   }
+  // }
   bool isError = false;
   bool isLoading = false;
   Widget build(BuildContext context) {
@@ -31,16 +61,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       loading: () {
         isLoading = true;
         if (isLoading == true) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
       },
     );
+
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             backgroundColor: AppColors.purpleMain,
             //elevation: 0,
-            title: Text('home page'),
+            title: const Text('home page'),
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -56,85 +87,101 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         behavior: MyBehavior(),
                         child: ListView.builder(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
-                            itemCount: products?.data.length,
+                            itemCount: products?.data.length ?? 10,
                             shrinkWrap: true,
                             itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (BuildContext) =>
-                                              DetailsScreen()));
-                                },
-                                child: Card(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Container(
-                                        // margin: const EdgeInsets.all(5),
-                                        height: 190,
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: const BoxDecoration(
-                                          color: Color.fromARGB(
-                                              255, 202, 200, 200),
-                                          borderRadius: BorderRadius.vertical(
-                                              top: Radius.circular(8)),
-                                        ),
+                              print("leeeeeee${products?.data.length ?? 10}");
+                              return Card(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Container(
+                                      // margin: const EdgeInsets.all(5),
+                                      height: 190,
+                                      width: MediaQuery.of(context).size.width,
+                                      decoration: const BoxDecoration(
+                                        color:
+                                            Color.fromARGB(255, 202, 200, 200),
+                                        borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(8)),
+                                      ),
 
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext) =>
+                                                      DetailsScreen()));
+                                        },
                                         child: MyCashedNetworkImage(
-                                            image:
-                                                products?.data[index].images ??
-                                                    ''),
+                                            image: products
+                                                    ?.data[index].images[0] ??
+                                                []),
                                       ),
-                                      SizedBox(
-                                        height: 12,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 12.0),
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
 
-                                        /// price and titile
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                                products?.data[index].title ??
-                                                    '',
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                )),
-                                            ////${meals?.data.length}"
-                                            Text(
-                                                "${products?.data[index].price ?? ''}",
-                                                style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black,
-                                                )),
-                                          ],
-                                        ),
+                                      /// price and titile
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                              products?.data[index].title ?? '',
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              )),
+                                          ////${meals?.data.length}"
+                                          Text(
+                                              " \$ ${products?.data[index].price.toString() ?? ''}",
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              )),
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 12,
-                                      ),
+                                    ),
+                                    const SizedBox(
+                                      height: 12,
+                                    ),
 
-                                      /// raiting
-                                      const Padding(
-                                        padding: EdgeInsets.only(
-                                            right: 12.0, bottom: 20),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.yellow,
-                                        ),
+                                    /// raiting
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          const Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          const SizedBox(
+                                            width: 12,
+                                          ),
+                                          Text(
+                                              products?.data[index].rating
+                                                      .toString() ??
+                                                  '',
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              )),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               );
                             }),
