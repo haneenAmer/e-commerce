@@ -30,3 +30,13 @@ ClipRRect MyCashedNetworkImage({required image}) {
     ),
   );
 }
+
+TextStyle headerTextStyle = const TextStyle(
+  fontSize: 18,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
+);
+TextStyle bodyTextStyle = const TextStyle(
+  fontSize: 16,
+  color: Colors.black,
+);
