@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hala_sat_task/constance/constance.dart';
+import 'package:hala_sat_task/core/models/detail_product.dart';
 import 'package:hala_sat_task/core/models/product_list_models.dart';
 import 'package:hala_sat_task/riveropd/product_list_riverpod.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -46,23 +47,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   //     _pagingController.error = error;
   //   }
   // }
+
   bool isError = false;
   bool isLoading = false;
   Widget build(BuildContext context) {
     ref.watch(productListFutureProvider).when(
       data: (data) {
         products = data;
-        for (int i = 0; i < products!.data.length; i++)
-          print("hfffffff${products?.data[i].images}");
+        loading:
+        ();
+        // for (int i = 0; i < products!.data.length; i++)
+        //   print("hfffffff${products?.data[i].images}");
       },
       error: (_, __) {
         isError = true;
+        loading:
+        ();
       },
       loading: () {
         isLoading = true;
-        if (isLoading == true) {
-          return const CircularProgressIndicator();
-        }
+
+        return const CircularProgressIndicator();
       },
     );
 
@@ -113,12 +118,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (BuildContext) =>
-                                                      DetailsScreen()));
+                                                      DetailsScreen(
+                                                        id: products
+                                                                ?.data[index]
+                                                                .id ??
+                                                            '',
+                                                      )));
                                         },
                                         child: MyCashedNetworkImage(
                                             image: products
                                                     ?.data[index].images[0] ??
-                                                []),
+                                                ''),
                                       ),
                                     ),
                                     const SizedBox(
@@ -133,21 +143,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
+                                          Expanded(
+                                            child: Text(
                                               products?.data[index].title ?? '',
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              )),
+                                              style: headerTextStyle,
+                                              softWrap: true,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
                                           ////${meals?.data.length}"
                                           Text(
                                               " \$ ${products?.data[index].price.toString() ?? ''}",
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              )),
+                                              style: headerTextStyle),
                                         ],
                                       ),
                                     ),
@@ -173,11 +181,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                               products?.data[index].rating
                                                       .toString() ??
                                                   '',
-                                              style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              )),
+                                              style: headerTextStyle),
                                         ],
                                       ),
                                     ),
