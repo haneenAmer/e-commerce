@@ -25,7 +25,8 @@ class Products {
       );
 
   factory Products.fromJson(Map<String, dynamic> json) => Products(
-        data: List<Product>.from(json["data"].map((x) => Product.fromJson(x))),
+        data: List<Product>.from(
+            json["products"].map((x) => Product.fromJson(x))),
         total: json["total"],
         skip: json["skip"],
         limit: json["limit"],
