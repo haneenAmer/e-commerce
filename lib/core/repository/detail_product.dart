@@ -7,8 +7,8 @@ class DetailProductRepository {
   DetailProductRepository(this.id);
 
   Future<DetailProduct> getDetailProductModel() async {
-    DetailProductServices detailProductServices = DetailProductServices(
-        'https://rrs-app-zcfos.ondigitalocean.app/meals', id);
+    DetailProductServices detailProductServices =
+        DetailProductServices('https://dummyjson.com/products', id);
 
     try {
       final json = await detailProductServices.detailProducResponse();
