@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hala_sat_task/screens/home_screen.dart';
+import 'package:hala_sat_task/screens/login_screen.dart';
 
 final nameProvider = StateProvider<String?>((ref) => 'null');
 
@@ -15,6 +16,6 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final name = ref.watch(nameProvider);
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: HomeScreen());
+        debugShowCheckedModeBanner: false, home: LoginScreen());
   }
 }
