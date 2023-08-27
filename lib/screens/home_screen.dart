@@ -16,54 +16,16 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  TextEditingController editingController = TextEditingController();
   List<Product> items = [];
   @override
-  void initState() {
-    super.initState();
-    // اعتقد لازم شي ينكتب هنا
-  }
-
-  void filterSearchResults(editingController) {
-    setState(() {
-      items = items
-          .where((product) =>
-              product.title
-                  ?.toLowerCase()
-                  .contains(editingController.toLowerCase()) ??
-              false)
-          .toList();
-    });
-  }
-
-  TextField searchTextField() {
-    return TextField(
-      onChanged: (value) {
-        filterSearchResults(value);
-      },
-      style: const TextStyle(
-        color: Colors.white,
-        fontSize: 16,
-      ),
-      controller: editingController,
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-        prefixIcon: Icon(
-          Icons.search,
-          color: Colors.white,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            backgroundColor: AppColors.purpleMain, title: searchTextField()
-            // const Text('home page'),
-            ),
+          backgroundColor: AppColors.purpleMain, title: const Text('Home Page'),
+          // const Text('home page'),
+        ),
         body: RiverPagedBuilder<int, Product>(
           // the first page we will ask
           firstPageKey: 1,
@@ -107,7 +69,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   },
 
                                   /// image of card
-                                  child: MyCashedNetworkImage(
+                                  child: myCashedNetworkImage(
                                       image: item.thumbnail ?? ''),
                                 ),
                               ),
