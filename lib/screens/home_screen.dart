@@ -114,7 +114,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       color: Colors.amber,
                                     ),
                                     const SizedBox(
-                                      width: 12,
+                                      width: 4,
                                     ),
                                     Text(item.rating.toString(),
                                         style: headerTextStyle),
