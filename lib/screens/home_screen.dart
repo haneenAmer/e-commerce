@@ -16,6 +16,46 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  TextEditingController editingController = TextEditingController();
+  List<Product> items = [];
+  @override
+  void initState() {
+    super.initState();
+    // اعتقد لازم شي ينكتب هنا
+  }
+
+  void filterSearchResults(editingController) {
+    setState(() {
+      items = items
+          .where((product) =>
+              product.title
+                  ?.toLowerCase()
+                  .contains(editingController.toLowerCase()) ??
+              false)
+          .toList();
+    });
+  }
+
+  TextField searchTextField() {
+    return TextField(
+      onChanged: (value) {
+        filterSearchResults(value);
+      },
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 16,
+      ),
+      controller: editingController,
+      decoration: const InputDecoration(
+        border: InputBorder.none,
+        prefixIcon: Icon(
+          Icons.search,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +108,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                                   /// image of card
                                   child: MyCashedNetworkImage(
-                                      image: item.images?[0] ?? ''),
+                                      image: item.thumbnail ?? ''),
                                 ),
                               ),
                               const SizedBox(
