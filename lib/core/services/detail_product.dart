@@ -1,16 +1,15 @@
-import 'package:dio/dio.dart';
+import '../../constance/end_poins.dart';
+import '../../network/dio_client.dart';
 
 class DetailProductServices {
-  final String endpoint;
-  final String id;
+  final int id;
 
-  DetailProductServices(this.endpoint, this.id);
-  Dio dio = Dio();
+  DetailProductServices(this.id);
+  DioClient dio = DioClient();
 
   Future detailProducResponse() async {
     try {
-      final response = await dio.get(endpoint, queryParameters: {'id': id});
-      print("i am here ${response.data}");
+      final response = await dio.get('${Endpoints.products}/$id');
       return response.data;
     } catch (e) {
       rethrow;
