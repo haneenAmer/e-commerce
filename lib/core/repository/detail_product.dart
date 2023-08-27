@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:hala_sat_task/core/models/detail_product.dart';
 import '../../network/dio_exeptions.dart';
