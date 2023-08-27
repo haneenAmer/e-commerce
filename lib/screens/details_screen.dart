@@ -37,6 +37,8 @@ class DetailsScreen extends ConsumerWidget {
                           itemBuilder: (context, pagePosition) {
                             return Container(
                               margin: const EdgeInsets.all(10),
+
+                              /// Image of item
                               child: Image(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(data.images[0])),
