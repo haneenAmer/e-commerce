@@ -40,20 +40,3 @@ TextStyle bodyTextStyle = const TextStyle(
   fontSize: 16,
   color: Colors.black,
 );
-
-TextField searchTextField() {
-  return const TextField(
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 16,
-    ),
-    //controller: editingController,
-    decoration: InputDecoration(
-      border: InputBorder.none,
-      prefixIcon: Icon(
-        Icons.search,
-        color: Colors.white,
-      ),
-    ),
-  );
-}
