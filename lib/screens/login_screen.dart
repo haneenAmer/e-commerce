@@ -51,7 +51,7 @@ class _LoginState extends State<LoginScreen> {
         appBar: AppBar(
           backgroundColor: AppColors.purpleMain,
           elevation: 0,
-          title: const Text('Login Screen'),
+          title: const Text('Login Page'),
         ),
         body: SingleChildScrollView(
           child: Column(
