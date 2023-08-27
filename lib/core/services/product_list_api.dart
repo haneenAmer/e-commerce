@@ -1,16 +1,14 @@
-import 'package:dio/dio.dart';
+import '../../constance/end_poins.dart';
+import '../../network/dio_client.dart';
 
 class ProductListServices {
-  final String endPoint;
+  ProductListServices();
+  final DioClient dio = DioClient();
 
-  ProductListServices(this.endPoint);
-  final Dio dio = Dio();
-
-  Future productListResponse() async {
+  Future productListResponse(int page, int pageLimitimit) async {
     try {
-      final response = await dio.get(endPoint);
-      print(response.data);
-      print('hi from server');
+      final response = await dio.get(Endpoints.products,
+          queryParameters: {"page": page, "limit": pageLimitimit});
       return response.data;
     } catch (e) {
       rethrow;
