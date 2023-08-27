@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:hala_sat_task/constance/constance.dart';
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -10,18 +10,17 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginScreen> {
-  // final _formkey = GlobalKey<FormState>();
-  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final String? validUsername = 'admin';
   final String? validPassword = '12345678';
   String? username = '';
   String? password = '';
+
+  /// Login function to check to valiation of user
   void _login() {
-    // if (_formKey.currentState!.validate()) {
     if (username == validUsername && password == validPassword) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       showDialog(
@@ -34,7 +33,10 @@ class _LoginState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text('OK'),
+              child: const Text(
+                'OK',
+                style: TextStyle(color: AppColors.purpleMain),
+              ),
             ),
           ],
         ),
@@ -47,13 +49,14 @@ class _LoginState extends State<LoginScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xff4313a3),
+          backgroundColor: AppColors.purpleMain,
           elevation: 0,
-          title: const Text('LoginScreen'),
+          title: const Text('Login Screen'),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              /// logog image section
               Padding(
                 padding: const EdgeInsets.only(top: 30.0),
                 child: Center(
@@ -73,12 +76,13 @@ class _LoginState extends State<LoginScreen> {
                 child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Form(
-                      // key: _formkey,
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Padding(
                                 padding: const EdgeInsets.all(12.0),
+
+                                /// ser name txt field
                                 child: TextFormField(
                                     onChanged: (value) {
                                       setState(() {
@@ -102,6 +106,8 @@ class _LoginState extends State<LoginScreen> {
                                                 BorderSide(color: Colors.red),
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(9.0)))))),
+
+                            /// passwor section
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: TextFormField(
@@ -120,7 +126,7 @@ class _LoginState extends State<LoginScreen> {
                                   labelText: 'Password',
                                   prefixIcon: Icon(
                                     Icons.key,
-                                    color: Colors.green,
+                                    color: Colors.grey,
                                   ),
                                   errorStyle: TextStyle(fontSize: 18.0),
                                   border: OutlineInputBorder(
@@ -130,17 +136,17 @@ class _LoginState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
-                            Container(
-                              //margin: EdgeInsets.symmetric(horizontal: 100),
-                              child: Text('Forget Password!'),
-                            ),
-                            SizedBox(
+                            const Text('Forget Password!'),
+                            const SizedBox(
                               height: 30,
                             ),
+
+                            /// log in button
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 12.0),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 12.0),
                                 child: SizedBox(
                                   height: 50,
                                   width: double.infinity,
@@ -148,16 +154,16 @@ class _LoginState extends State<LoginScreen> {
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              Color(0xff4313a3)),
+                                              AppColors.purpleMain),
                                     ),
-                                    child: Text(
-                                      'LoginScreen',
+                                    onPressed: _login,
+                                    child: const Text(
+                                      'Login ',
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 22,
                                       ),
                                     ),
-                                    onPressed: _login,
                                   ),
                                 ),
                               ),
