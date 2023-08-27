@@ -6,8 +6,8 @@ import 'package:riverpod_infinite_scroll/riverpod_infinite_scroll.dart';
 class ProductsNotifier extends PagedNotifier<int, Product> {
   ProductsNotifier()
       : super(
-          load: (page, pageLimitimit) =>
-              ProductListRepository().geProductLitModels(page, pageLimitimit),
+          load: (page, limit) =>
+              ProductListRepository().geProductLitModels(page, limit),
           nextPageKeyBuilder: NextPageKeyBuilderDefault.mysqlPagination,
         );
   final ProductListRepository productListRepository = ProductListRepository();
