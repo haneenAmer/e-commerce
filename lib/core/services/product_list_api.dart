@@ -5,10 +5,10 @@ class ProductListServices {
   ProductListServices();
   final DioClient dio = DioClient();
 
-  Future productListResponse(int page, int pageLimitimit) async {
+  Future productListResponse(int page, int limit) async {
     try {
       final response = await dio.get(Endpoints.products,
-          queryParameters: {"page": page, "limit": pageLimitimit});
+          queryParameters: {"page": page, "limit": limit});
       return response.data;
     } catch (e) {
       rethrow;
