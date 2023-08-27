@@ -9,10 +9,9 @@ class ProductListRepository {
 
   ProductListServices productListServices = ProductListServices();
 
-  Future<List<Product>> geProductLitModels(int page, int pageLimitimit) async {
+  Future<List<Product>> geProductLitModels(int page, int limit) async {
     try {
-      var json =
-          await productListServices.productListResponse(page, pageLimitimit);
+      var json = await productListServices.productListResponse(page, limit);
       List<Product> products = Products.fromJson(json).data;
       return products;
     } on DioException catch (e) {
