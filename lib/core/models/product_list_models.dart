@@ -51,20 +51,20 @@ class Product {
   final String? brand;
   final String? category;
   final String? thumbnail;
-  final List<String?> images;
+  final List<String?>? images;
 
   Product({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.price,
-    required this.discountPercentage,
-    required this.rating,
-    required this.stock,
-    required this.brand,
-    required this.category,
-    required this.thumbnail,
-    required this.images,
+    this.id,
+    this.title,
+    this.description,
+    this.price,
+    this.discountPercentage,
+    this.rating,
+    this.stock,
+    this.brand,
+    this.category,
+    this.thumbnail,
+    this.images,
   });
 
   Product copyWith({
@@ -119,6 +119,6 @@ class Product {
         "brand": brand,
         "category": category,
         "thumbnail": thumbnail,
-        "images": List<dynamic>.from(images.map((x) => x)),
+        "images": List<dynamic>.from(images!.map((x) => x)),
       };
 }
