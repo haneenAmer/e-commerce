@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 
@@ -14,9 +13,9 @@ class MyBehavior extends ScrollBehavior {
   }
 }
 
-ClipRRect MyCashedNetworkImage({required image}) {
+ClipRRect myCashedNetworkImage({required image}) {
   return ClipRRect(
-    borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+    borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
     child: CachedNetworkImage(
       fit: BoxFit.cover,
       imageUrl: image,
