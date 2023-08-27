@@ -1,20 +1,23 @@
+import 'dart:developer';
+import 'package:dio/dio.dart';
 import 'package:hala_sat_task/core/models/product_list_models.dart';
+import '../../network/dio_exeptions.dart';
 import '../services/product_list_api.dart';
 
 class ProductListRepository {
   ProductListRepository();
 
-  ProductListServices productListServices =
-      ProductListServices('https://dummyjson.com/products');
+  ProductListServices productListServices = ProductListServices();
 
-  Future<Products> geProductLitModels() async {
+  Future<List<Product>> geProductLitModels(int page, int pageLimitimit) async {
     try {
-      var json = await productListServices.productListResponse();
-      Products products = Products.fromJson(json);
-      print('hi from repo');
+      var json =
+          await productListServices.productListResponse(page, pageLimitimit);
+      List<Product> products = Products.fromJson(json).data;
       return products;
-    } catch (e) {
-      print('Error: $e'); // Print the error for debugging
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e);
+      log(errorMessage.toString());
       rethrow;
     }
   }
