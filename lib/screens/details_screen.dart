@@ -70,7 +70,26 @@ class DetailsScreen extends ConsumerWidget {
                           const SizedBox(
                             height: 20,
                           ),
-
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              const SizedBox(
+                                width: 6,
+                              ),
+                              Text(data.rating.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 18,
+                                  )),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Text(
                             data.description,
                             style: bodyTextStyle,
@@ -78,44 +97,28 @@ class DetailsScreen extends ConsumerWidget {
                           const SizedBox(
                             height: 30,
                           ),
-                          const Divider(),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.inventory_2,
+                                color: Colors.grey,
+                                size: 18,
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text("${data.stock.toString()} pieces left"),
+                            ],
+                          ),
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            'Sugestions',
-                            style: headerTextStyle,
+                          const Divider(
+                            thickness: 1,
                           ),
-                          // SizedBox(
-                          //     height: 150,
-                          //     width: double.infinity,
-                          //     child: ScrollConfiguration(
-                          //       behavior: MyBehavior(),
-                          //       child: ListView.builder(
-                          //           scrollDirection: Axis.horizontal,
-                          //           padding: const EdgeInsets.only(top: 8),
-                          //           itemCount: products?.data.length,
-                          //           itemBuilder: (BuildContext context, int index) {
-                          //             return Column(
-                          //               children: [
-                          //                 Container(
-                          //                   margin: const EdgeInsets.all(5),
-                          //                   height: 100,
-                          //                   width: 100,
-                          //                   decoration: BoxDecoration(
-                          //                     color: const Color.fromARGB(
-                          //                         255, 202, 200, 200),
-                          //                     // borderRadius: BorderRadius.circular(4),
-                          //                   ),
-                          //                   child: MyCashedNetworkImage(
-                          //                       image: products?.data[index].images[0] ??
-                          //                           []),
-                          //                 ),
-                          //                 Text('foodHomeList[index],'),
-                          //               ],
-                          //             );
-                          //           }),
-                          //     )),
+                          const SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
                     ),
